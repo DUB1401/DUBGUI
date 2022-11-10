@@ -2,81 +2,87 @@
 
 #include "../EvolvGen.h"
 
-// Кнопка-переключатель.
-class ToggleButton {
-public:
+namespace DUBGUI {
 
-	// Статусы переключателя.
-	enum class Status { Normal = 0, Hover, Active, Clicked };
+	// Кнопка-переключатель.
+	class ToggleButton {
+	public:
 
-	// Варианты разбики текстур переключателя.
-	enum class TextureSlicingType { Single = 1, Double, Triple };
+		// Статусы переключателя.
+		enum class Status { Normal = 0, Hover, Active, Clicked };
 
-private:
+		// Варианты разбики текстур переключателя.
+		enum class TextureSlicingType { Single = 1, Double, Triple };
 
-	//---> Данные.
-	//=======================================================================================================================//
-	// Координаты в окне.
-	sf::Vector2f Position = { 0.f, 0.f };
-	// Размер кнопки.
-	sf::Vector2u Size;
-	// Текущее состояние кнопки.
-	Status ButtonStatus = Status::Normal;
-	// Была ли нажата кнопка в предыдущем цикле.
-	bool ButtonWasPressed = false;
-	// Масштаб спрайта.
-	sf::Vector2f Scale = { 1.f, 1.f };
-	// Логический статус кнопки.
-	bool ButtonValue = false;
-	// Количество спрайтов для каждой вариации переключателя.
-	unsigned int SpriteLinesCount = 3;
+	private:
 
-	//---> Графические компоненты.
-	//=======================================================================================================================//
-	// Указатель на окно отрисовки.
-	sf::RenderWindow* MainWindow;
-	// Текстура кнопки.
-	sf::Texture ButtonTexture;
-	// Спрайты кнопки.
-	std::vector<sf::Sprite> ButtonSprites;
+		//---> Данные.
+		//=======================================================================================================================//
+		// Координаты в окне.
+		sf::Vector2f Position = { 0.f, 0.f };
+		// Размер кнопки.
+		sf::Vector2u Size;
+		// Текущее состояние кнопки.
+		Status ButtonStatus = Status::Normal;
+		// Была ли нажата ЛКМ в предыдущем цикле.
+		bool ButtonWasPressed = false;
+		// Была ли нажата ЛКМ до наведения на переключатель.
+		bool ButtonWasPressedOnAway = false;
+		// Масштаб спрайта.
+		sf::Vector2f Scale = { 1.f, 1.f };
+		// Логический статус кнопки.
+		bool ButtonValue = false;
+		// Количество спрайтов для каждой вариации переключателя.
+		unsigned int SpriteLinesCount = 3;
 
-protected:
+		//---> Графические компоненты.
+		//=======================================================================================================================//
+		// Указатель на окно отрисовки.
+		sf::RenderWindow* MainWindow;
+		// Текстура кнопки.
+		sf::Texture ButtonTexture;
+		// Спрайты кнопки.
+		std::vector<sf::Sprite> ButtonSprites;
 
-	//---> Функции обработки.
-	//=======================================================================================================================//
-	// Проверяет попадание курсора в область кнопки.
-	bool CheckMouseHover();
-	// Возвращает индекс спрайта в зависимости от настроек, статуса и значения переключателя.
-	unsigned int GetSpriteIndexs();
+	protected:
 
-public:
+		//---> Функции обработки.
+		//=======================================================================================================================//
+		// Проверяет попадание курсора в область кнопки.
+		bool CheckMouseHover();
+		// Возвращает индекс спрайта в зависимости от настроек, статуса и значения переключателя.
+		unsigned int GetSpriteIndexs();
 
-	// Конструктор: стандартный.
-	ToggleButton();
+	public:
 
-	// Инициализатор: задаёт окно отрисовки. 
-	// Примечание: вызывать после установки всех свойств и загрузки текстуры.
-	void Initialize(sf::RenderWindow* MainWindow);
+		// Конструктор: стандартный.
+		ToggleButton();
 
-	// Устанавливает позицию в окне.
-	void SetPosition(sf::Vector2f Position);
+		// Инициализатор: задаёт окно отрисовки. 
+		// Примечание: вызывать после установки всех свойств и загрузки текстуры.
+		void Initialize(sf::RenderWindow* MainWindow);
 
-	// Устанавливает позицию в окне.
-	void SetPosition(float PositionX, float PositionY);
+		// Устанавливает позицию в окне.
+		void SetPosition(sf::Vector2f Position);
 
-	// Устанавливает масштаб спрайта.
-	void SetScale(float Scale);
+		// Устанавливает позицию в окне.
+		void SetPosition(float PositionX, float PositionY);
 
-	// Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму.
-	bool LoadTexture(std::string Path, sf::Vector2u SpriteSize, TextureSlicingType Type);
+		// Устанавливает масштаб спрайта.
+		void SetScale(float Scale);
 
-	// Возвращает значение переключателя.
-	bool GetValue();
+		// Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму.
+		bool LoadTexture(std::string Path, sf::Vector2u SpriteSize, TextureSlicingType Type);
 
-	// Устанавливает значение кнопки.
-	void SetValue(bool Value);
+		// Возвращает значение переключателя.
+		bool GetValue();
 
-	// Отрисовывание и обновление переключателя. Вовзаращает статус переключателя.
-	Status Update();
+		// Устанавливает значение кнопки.
+		void SetValue(bool Value);
 
-};
+		// Отрисовывание и обновление переключателя. Возвращает статус переключателя.
+		Status Update();
+
+	};
+
+}
