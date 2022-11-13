@@ -9,12 +9,20 @@ enum class `Status` { Normal = 0, Hover, Active, Clicked }
 * **Normal** – обычное состояние переключателя.
 * **Hover** – курсор мыши наведён на переключатель.
 * **Active** – курсор мыши наведён на переключатель, и нажата ЛКМ.
-* **Clicked** – статус переключателя в момент клика: когда ЛКМ перестаёт быть нажата при наведении курсора на переключатель.
+* **Clicked** – статус переключателя в момент клика: когда ЛКМ перестаёт быть нажата при наведённом на переключатель курсоре.
 ___
 
-enum class `TextureSlicingType` { Single = 1, Double, Triple }
+enum class `SlicingOrientation` { Vertical, Horizontal }
 
-Варианты разбики текстур переключателя.
+Направление разбивки текстуры.
+		
+* **Vertical** – текстура будет делиться на спрайты в вертикальном направлении.
+* **Horizontal** – текстура будет делиться на спрайты в горизонтальном направлении.
+___
+
+enum class `SlicingType` { Single = 1, Double, Triple }
+
+Варианты разбики текстуры переключателя.
 
 * **Single** – вертикальная текстура содержит два спрайта для двух значений переключателя: true и false.
 * **Double** – вертикальная текстура содержит четыре спрайта для двух значений переключателя: true и false. Спрайты соответствуют статусам: _Normal_, _Hover_.
@@ -49,9 +57,16 @@ ___
 Устанавливает масштаб спрайта.
 ___
 	
-**bool** `LoadTexture(std::string Path, sf::Vector2u SpriteSize, TextureSlicingType Type)`
+**bool** `LoadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType Type)`
 
 Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму.
+
+___
+
+
+**bool** `LoadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation)`
+
+Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму и направлению.
 
 ___
 	
