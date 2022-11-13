@@ -35,54 +35,54 @@ enum class `SlicingType` { Single = 1, Double, Triple }
 Стандартный конструктор.
 ___
 
-**void** `Initialize(sf::RenderWindow* MainWindow)`
+**void** `initialize(sf::RenderWindow* MainWindow)`
 
  Инициализатор: задаёт окно отрисовки. 
  
  Примечание: вызывать после установки всех свойств и загрузки текстуры.
 ___
-**void** `SetPosition(sf::Vector2f Position)`
+**void** `setPosition(sf::Vector2f Position)`
 
 Устанавливает позицию в окне.
 ___
 
-**void** `SetPosition(float PositionX, float PositionY)`
+**void** `setPosition(float PositionX, float PositionY)`
 
 Устанавливает позицию в окне.
 
 ___
 
-**void** `SetScale(float Scale)`
+**void** `setScale(float Scale)`
 	
 Устанавливает масштаб спрайта.
 ___
 	
-**bool** `LoadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType Type)`
+**bool** `loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType Type)`
 
-Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму.
+Загружает текстуру переключателя и разрезает её на спрайты согласно выбранному режиму.
 
 ___
 
 
-**bool** `LoadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation)`
+**bool** `loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation)`
 
-Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму и направлению.
+Загружает текстуру переключателя и разрезает её на спрайты согласно выбранному режиму и направлению.
 
 ___
 	
-**bool** `GetValue()`
+**bool** `getValue()`
 
 Возвращает значение переключателя.
 
 ___
 	
-**void** `SetValue(bool Value)`
+**void** `setValue(bool Value)`
 
-Устанавливает значение кнопки.
+Устанавливает значение переключателя.
 
 ___
 	
-**Status** `Update()`
+**Status** `update()`
 
 Отрисовывание и обновление переключателя. Возвращает статус переключателя.
 	

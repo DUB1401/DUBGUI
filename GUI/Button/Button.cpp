@@ -1,12 +1,12 @@
-#include "ToggleButton.h"
+#include "Button.h"
 
-// ---> ToggleButton
+// ---> Button
 //=======================================================================================================================//
 
 namespace DUBGUI {
 
-	// Проверяет попадание курсора в область переключателя.
-	bool ToggleButton::CheckMouseHover() {
+	// Проверяет попадание курсора в область кнопки.
+	bool Button::CheckMouseHover() {
 		// Сохранение координат мыши.
 		sf::Vector2i MouseCoords = sf::Mouse::getPosition(*MainWindow);
 		// Попадание по осям X и Y.
@@ -20,32 +20,31 @@ namespace DUBGUI {
 	}
 
 	// Возвращает индекс спрайта в зависимости от настроек, статуса и значения.
-	unsigned int ToggleButton::GetSpriteIndexs() {
+	unsigned int Button::GetSpriteIndexs() {
 		// Индекс спрайта.
 		unsigned int SpriteIndex = 0;
-		// Модификатор статуса переключателя.
+		// Модификатор статуса кнопки.
 		unsigned int ButtonStatusModificator;
 
-		// Если переключатель имеет статус без соответствующего спрайта, дать ей максимальный индекс, иначе преобразовать статус в индекс.
+		// Если кнопка имеет статус без соответствующего спрайта, дать ей максимальный индекс, иначе преобразовать статус в индекс.
 		if (ButtonStatus == Status::Clicked) ButtonStatusModificator = 3;
 		else ButtonStatusModificator = static_cast<unsigned int>(ButtonStatus) + 1;
-		// Если индекс спрайта больше заданного количества спрайтов на значение переключателя, то установить максимально возможный индекс.
+		// Если индекс спрайта больше заданного количества спрайтов на значение кнопки, то установить максимально возможный индекс.
 		if (ButtonStatusModificator > SpriteLinesCount) ButtonStatusModificator = SpriteLinesCount;
-		// Если переключатель включен, то задать индекс со сдвигом, иначе к индексу со сдвигом прибавить количество спрайтов включённой формы переключателя.
-		if (ButtonValue) SpriteIndex = ButtonStatusModificator - 1;
-		else SpriteIndex = ButtonStatusModificator - 1 + SpriteLinesCount;
+		// Компенсировать сдвиг индекса.
+		SpriteIndex = ButtonStatusModificator - 1;
 
 		return SpriteIndex;
 	}
 
 	// Конструктор: стандартный.
-	ToggleButton::ToggleButton() {
+	Button::Button() {
 
 	}
 
 	// Инициализатор: задаёт окно отрисовки. 
 	// Примечание: вызывать после установки всех свойств и загрузки текстуры.
-	void ToggleButton::initialize(sf::RenderWindow* MainWindow) {
+	void Button::initialize(sf::RenderWindow* MainWindow) {
 
 		//---> Передача аргументов.
 		//=======================================================================================================================//
@@ -59,22 +58,22 @@ namespace DUBGUI {
 	}
 
 	// Устанавливает позицию в окне.
-	void ToggleButton::setPosition(sf::Vector2f Position) {
+	void Button::setPosition(sf::Vector2f Position) {
 		this->Position = Position;
 	}
 
 	// Устанавливает позицию в окне.
-	void ToggleButton::setPosition(float PositionX, float PositionY) {
+	void Button::setPosition(float PositionX, float PositionY) {
 		this->Position = sf::Vector2f(PositionX, PositionY);
 	}
 
 	// Устанавливает масштаб спрайта.
-	void ToggleButton::setScale(float Scale) {
+	void Button::setScale(float Scale) {
 		this->Scale = sf::Vector2f(Scale, Scale);
 	}
 
-	// Загружает текстуру переключателя и разрезает её на спрайты согласно выбранному режиму.
-	bool ToggleButton::loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType) {
+	// Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму.
+	bool Button::loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType) {
 
 		//---> Передача аргументов.
 		//=======================================================================================================================//
@@ -99,8 +98,8 @@ namespace DUBGUI {
 		else return false;
 	}
 
-	// Загружает текстуру переключателя и разрезает её на спрайты согласно выбранному режиму и направлению.
-	bool ToggleButton::loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation) {
+	// Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму и направлению.
+	bool Button::loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation) {
 
 		//---> Передача аргументов.
 		//=======================================================================================================================//
@@ -126,20 +125,10 @@ namespace DUBGUI {
 		else return false;
 	}
 
-	// Возвращает значение переключателя.
-	bool ToggleButton::getValue() {
-		return ButtonValue;
-	}
+	// Отрисовывание и обновление кнопки. Возвращает статус кнопки.
+	Button::Status Button::update() {
 
-	// Устанавливает значение переключателя.
-	void ToggleButton::setValue(bool Value) {
-		ButtonValue = Value;
-	}
-
-	// Отрисовывание и обновление переключателя. Возвращает статус переключателя.
-	ToggleButton::Status ToggleButton::update() {
-
-		// Если курсор попадает на переключатель.
+		// Если курсор попадает на кнопку.
 		if (CheckMouseHover()) {
 			// Если ЛКМ не нажата.
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressed) { 
@@ -157,14 +146,13 @@ namespace DUBGUI {
 			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && ButtonWasPressed && !ButtonWasPressedOnAway) {
 				ButtonWasPressed = false;
 				ButtonStatus = Status::Clicked;
-				ButtonValue = DUBLIB::InvertBool(ButtonValue);
 			}
 		}
 		else {
 			ButtonStatus = Status::Normal;
-			// Фикс срабатывания переключателя в случае, когда зажатая ЛКМ уходит с области фокуса.
+			// Фикс срабатывания кнопки в случае, когда зажатая ЛКМ уходит с области фокуса.
 			ButtonWasPressed = false;
-			// Фикс срабатывания переключателя в случае, когда зажатая ЛКМ приходит в область фокуса.
+			// Фикс срабатывания кнопки в случае, когда зажатая ЛКМ приходит в область фокуса.
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressedOnAway) ButtonWasPressedOnAway = true;
 		}
 
