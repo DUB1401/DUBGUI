@@ -1,22 +1,12 @@
 #pragma once
 
 #include "../EvolvGen.h"
+#include "../GUI.h"
 
 namespace DUBGUI {
 
 	// Кнопка-переключатель.
-	class ToggleButton {
-	public:
-
-		// Статусы переключателя.
-		enum class Status { Normal = 0, Hover, Active, Clicked };
-
-		// Направление разбивки текстуры.
-		enum class SlicingOrientation { Vertical, Horizontal };
-
-		// Варианты разбики текстуры переключателя.
-		enum class SlicingType { Single = 1, Double, Triple };
-
+	class ToggleButton : public ObjectGUI {
 	private:
 
 		//---> Данные.
@@ -26,15 +16,15 @@ namespace DUBGUI {
 		// Размер переключателя.
 		sf::Vector2u Size;
 		// Текущее состояние переключателя.
-		Status ButtonStatus = Status::Normal;
+		Status ToggleButtonStatus = Status::Normal;
 		// Была ли нажата ЛКМ в предыдущем цикле.
-		bool ButtonWasPressed = false;
+		bool ToggleButtonWasPressed = false;
 		// Была ли нажата ЛКМ до наведения на переключатель.
-		bool ButtonWasPressedOnAway = false;
+		bool ToggleButtonWasPressedOnAway = false;
 		// Масштаб спрайта.
 		sf::Vector2f Scale = { 1.f, 1.f };
 		// Логический статус переключателя.
-		bool ButtonValue = false;
+		bool ToggleButtonValue = false;
 		// Количество спрайтов для каждой вариации переключателя.
 		unsigned int SpriteLinesCount = 3;
 
@@ -43,9 +33,9 @@ namespace DUBGUI {
 		// Указатель на окно отрисовки.
 		sf::RenderWindow* MainWindow;
 		// Текстура переключателя.
-		sf::Texture ButtonTexture;
+		sf::Texture ToggleButtonTexture;
 		// Спрайты переключателя.
-		std::vector<sf::Sprite> ButtonSprites;
+		std::vector<sf::Sprite> ToggleButtonSprites;
 
 	protected:
 
@@ -54,15 +44,14 @@ namespace DUBGUI {
 		// Проверяет попадание курсора в область переключателя.
 		bool CheckMouseHover();
 		// Возвращает индекс спрайта в зависимости от настроек, статуса и значения переключателя.
-		unsigned int GetSpriteIndexs();
+		unsigned int GetSpriteIndex();
 
 	public:
 
-		// Конструктор: стандартный.
+		// Стандартный конструктор.
 		ToggleButton();
 
-		// Инициализатор: задаёт окно отрисовки. 
-		// Примечание: вызывать после установки всех свойств и загрузки текстуры.
+		// Инициализатор: задаёт окно отрисовки. Вызывать после установки всех свойств и загрузки текстуры.
 		void initialize(sf::RenderWindow* MainWindow);
 
 		// Устанавливает позицию в окне.
@@ -86,7 +75,7 @@ namespace DUBGUI {
 		// Устанавливает значение переключателя.
 		void setValue(bool Value);
 
-		// Отрисовывание и обновление переключателя. Возвращает статус переключателя.
+		// Отрисовывание и обновление переключателя.
 		Status update();
 
 	};

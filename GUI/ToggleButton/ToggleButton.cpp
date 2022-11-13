@@ -20,31 +20,30 @@ namespace DUBGUI {
 	}
 
 	// Возвращает индекс спрайта в зависимости от настроек, статуса и значения.
-	unsigned int ToggleButton::GetSpriteIndexs() {
+	unsigned int ToggleButton::GetSpriteIndex() {
 		// Индекс спрайта.
 		unsigned int SpriteIndex = 0;
 		// Модификатор статуса переключателя.
-		unsigned int ButtonStatusModificator;
+		unsigned int ToggleButtonStatusModificator;
 
 		// Если переключатель имеет статус без соответствующего спрайта, дать ей максимальный индекс, иначе преобразовать статус в индекс.
-		if (ButtonStatus == Status::Clicked) ButtonStatusModificator = 3;
-		else ButtonStatusModificator = static_cast<unsigned int>(ButtonStatus) + 1;
+		if (ToggleButtonStatus == Status::Clicked) ToggleButtonStatusModificator = 3;
+		else ToggleButtonStatusModificator = static_cast<unsigned int>(ToggleButtonStatus) + 1;
 		// Если индекс спрайта больше заданного количества спрайтов на значение переключателя, то установить максимально возможный индекс.
-		if (ButtonStatusModificator > SpriteLinesCount) ButtonStatusModificator = SpriteLinesCount;
+		if (ToggleButtonStatusModificator > SpriteLinesCount) ToggleButtonStatusModificator = SpriteLinesCount;
 		// Если переключатель включен, то задать индекс со сдвигом, иначе к индексу со сдвигом прибавить количество спрайтов включённой формы переключателя.
-		if (ButtonValue) SpriteIndex = ButtonStatusModificator - 1;
-		else SpriteIndex = ButtonStatusModificator - 1 + SpriteLinesCount;
+		if (ToggleButtonValue) SpriteIndex = ToggleButtonStatusModificator - 1;
+		else SpriteIndex = ToggleButtonStatusModificator - 1 + SpriteLinesCount;
 
 		return SpriteIndex;
 	}
 
-	// Конструктор: стандартный.
+	// Стандартный конструктор.
 	ToggleButton::ToggleButton() {
 
 	}
 
-	// Инициализатор: задаёт окно отрисовки. 
-	// Примечание: вызывать после установки всех свойств и загрузки текстуры.
+	// Инициализатор: задаёт окно отрисовки. Вызывать после установки всех свойств и загрузки текстуры.
 	void ToggleButton::initialize(sf::RenderWindow* MainWindow) {
 
 		//---> Передача аргументов.
@@ -53,8 +52,8 @@ namespace DUBGUI {
 
 		// Настройка спрайтов.
 		for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
-			ButtonSprites[i].setPosition(Position);
-			ButtonSprites[i].setScale(Scale);
+			ToggleButtonSprites[i].setPosition(Position);
+			ToggleButtonSprites[i].setScale(Scale);
 		}
 	}
 
@@ -82,17 +81,17 @@ namespace DUBGUI {
 		this->Size = SpriteSize;
 
 		// Проверка загрузки текстуры.
-		if (ButtonTexture.loadFromFile(Path)) {
+		if (ToggleButtonTexture.loadFromFile(Path)) {
 			// Буфер подгрузки спрайтов.
-			sf::Sprite ButtonSpriteBufer;
+			sf::Sprite ToggleButtonSpriteBufer;
 
 			// Настройка спрайтов.
 			for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
-				ButtonSprites.push_back(ButtonSpriteBufer);
-				ButtonSprites[i].setPosition(Position);
-				ButtonSprites[i].setTexture(ButtonTexture);
-				ButtonSprites[i].setTextureRect(sf::IntRect(0, Size.y * i, Size.x, Size.y));
-				ButtonSprites[i].setScale(Scale);
+				ToggleButtonSprites.push_back(ToggleButtonSpriteBufer);
+				ToggleButtonSprites[i].setPosition(Position);
+				ToggleButtonSprites[i].setTexture(ToggleButtonTexture);
+				ToggleButtonSprites[i].setTextureRect(sf::IntRect(0, Size.y * i, Size.x, Size.y));
+				ToggleButtonSprites[i].setScale(Scale);
 			}
 			return true;
 		}
@@ -108,18 +107,18 @@ namespace DUBGUI {
 		this->Size = SpriteSize;
 
 		// Проверка загрузки текстуры.
-		if (ButtonTexture.loadFromFile(Path)) {
+		if (ToggleButtonTexture.loadFromFile(Path)) {
 			// Буфер подгрузки спрайтов.
-			sf::Sprite ButtonSpriteBufer;
+			sf::Sprite ToggleButtonSpriteBufer;
 
 			// Настройка спрайтов.
 			for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
-				ButtonSprites.push_back(ButtonSpriteBufer);
-				ButtonSprites[i].setPosition(Position);
-				ButtonSprites[i].setTexture(ButtonTexture);
-				if (Orientation == SlicingOrientation::Vertical) ButtonSprites[i].setTextureRect(sf::IntRect(0, Size.y * i, Size.x, Size.y));
-				else ButtonSprites[i].setTextureRect(sf::IntRect(Size.x * i, 0, Size.x, Size.y));
-				ButtonSprites[i].setScale(Scale);
+				ToggleButtonSprites.push_back(ToggleButtonSpriteBufer);
+				ToggleButtonSprites[i].setPosition(Position);
+				ToggleButtonSprites[i].setTexture(ToggleButtonTexture);
+				if (Orientation == SlicingOrientation::Vertical) ToggleButtonSprites[i].setTextureRect(sf::IntRect(0, Size.y * i, Size.x, Size.y));
+				else ToggleButtonSprites[i].setTextureRect(sf::IntRect(Size.x * i, 0, Size.x, Size.y));
+				ToggleButtonSprites[i].setScale(Scale);
 			}
 			return true;
 		}
@@ -128,49 +127,49 @@ namespace DUBGUI {
 
 	// Возвращает значение переключателя.
 	bool ToggleButton::getValue() {
-		return ButtonValue;
+		return ToggleButtonValue;
 	}
 
 	// Устанавливает значение переключателя.
 	void ToggleButton::setValue(bool Value) {
-		ButtonValue = Value;
+		ToggleButtonValue = Value;
 	}
 
-	// Отрисовывание и обновление переключателя. Возвращает статус переключателя.
+	// Отрисовывание и обновление переключателя.
 	ToggleButton::Status ToggleButton::update() {
 
 		// Если курсор попадает на переключатель.
 		if (CheckMouseHover()) {
 			// Если ЛКМ не нажата.
-			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressed) { 
-				ButtonStatus = Status::Hover;
-				ButtonWasPressedOnAway = false;
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ToggleButtonWasPressed) {
+				ToggleButtonStatus = Status::Hover;
+				ToggleButtonWasPressedOnAway = false;
 			}
 
 			// Если ЛКМ нажата сейчас, а в прошлом цикле – нет.
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressed && !ButtonWasPressedOnAway) {
-				ButtonWasPressed = true;
-				ButtonStatus = Status::Active;
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ToggleButtonWasPressed && !ToggleButtonWasPressedOnAway) {
+				ToggleButtonWasPressed = true;
+				ToggleButtonStatus = Status::Active;
 			}
 
 			// Если ЛКМ была нажата в прошлом цикле, а сейчас – нет.
-			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && ButtonWasPressed && !ButtonWasPressedOnAway) {
-				ButtonWasPressed = false;
-				ButtonStatus = Status::Clicked;
-				ButtonValue = DUBLIB::InvertBool(ButtonValue);
+			if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && ToggleButtonWasPressed && !ToggleButtonWasPressedOnAway) {
+				ToggleButtonWasPressed = false;
+				ToggleButtonStatus = Status::Clicked;
+				ToggleButtonValue = DUBLIB::InvertBool(ToggleButtonValue);
 			}
 		}
 		else {
-			ButtonStatus = Status::Normal;
+			ToggleButtonStatus = Status::Normal;
 			// Фикс срабатывания переключателя в случае, когда зажатая ЛКМ уходит с области фокуса.
-			ButtonWasPressed = false;
+			ToggleButtonWasPressed = false;
 			// Фикс срабатывания переключателя в случае, когда зажатая ЛКМ приходит в область фокуса.
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressedOnAway) ButtonWasPressedOnAway = true;
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ToggleButtonWasPressedOnAway) ToggleButtonWasPressedOnAway = true;
 		}
 
-		MainWindow->draw(ButtonSprites[GetSpriteIndexs()]);
+		MainWindow->draw(ToggleButtonSprites[GetSpriteIndex()]);
 
-		return ButtonStatus;
+		return ToggleButtonStatus;
 	}
 
 }

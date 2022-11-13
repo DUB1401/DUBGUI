@@ -1,22 +1,12 @@
 #pragma once
 
 #include "../EvolvGen.h"
+#include "../GUI.h"
 
 namespace DUBGUI {
 
 	// Кнопка.
-	class Button {
-	public:
-
-		// Статусы кнопки.
-		enum class Status { Normal = 0, Hover, Active, Clicked };
-
-		// Направление разбивки текстуры.
-		enum class SlicingOrientation { Vertical, Horizontal };
-
-		// Варианты разбики текстуры кнопки.
-		enum class SlicingType { Single = 1, Double, Triple };
-
+	class Button : public ObjectGUI {
 	private:
 
 		//---> Данные.
@@ -52,15 +42,14 @@ namespace DUBGUI {
 		// Проверяет попадание курсора в область кнопки.
 		bool CheckMouseHover();
 		// Возвращает индекс спрайта в зависимости от настроек, статуса и значения кнопки.
-		unsigned int GetSpriteIndexs();
+		unsigned int GetSpriteIndex();
 
 	public:
 
 		// Конструктор: стандартный.
 		Button();
 
-		// Инициализатор: задаёт окно отрисовки. 
-		// Примечание: вызывать после установки всех свойств и загрузки текстуры.
+		// Инициализатор: задаёт окно отрисовки. Вызывать после установки всех свойств и загрузки текстуры.
 		void initialize(sf::RenderWindow* MainWindow);
 
 		// Устанавливает позицию в окне.
@@ -78,7 +67,7 @@ namespace DUBGUI {
 		// Загружает текстуру кнопки и разрезает её на спрайты согласно выбранному режиму и направлению.
 		bool loadTexture(std::string Path, sf::Vector2u SpriteSize, SlicingType SlicingType, SlicingOrientation Orientation);
 
-		// Отрисовывание и обновление кнопки. Возвращает статус кнопки.
+		// Отрисовывание и обновление кнопки.
 		Status update();
 
 	};

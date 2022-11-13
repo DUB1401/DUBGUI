@@ -20,7 +20,7 @@ namespace DUBGUI {
 	}
 
 	// Возвращает индекс спрайта в зависимости от настроек, статуса и значения.
-	unsigned int Button::GetSpriteIndexs() {
+	unsigned int Button::GetSpriteIndex() {
 		// Индекс спрайта.
 		unsigned int SpriteIndex = 0;
 		// Модификатор статуса кнопки.
@@ -33,7 +33,7 @@ namespace DUBGUI {
 		if (ButtonStatusModificator > SpriteLinesCount) ButtonStatusModificator = SpriteLinesCount;
 		// Компенсировать сдвиг индекса.
 		SpriteIndex = ButtonStatusModificator - 1;
-
+		
 		return SpriteIndex;
 	}
 
@@ -42,8 +42,7 @@ namespace DUBGUI {
 
 	}
 
-	// Инициализатор: задаёт окно отрисовки. 
-	// Примечание: вызывать после установки всех свойств и загрузки текстуры.
+	// Инициализатор: задаёт окно отрисовки. Вызывать после установки всех свойств и загрузки текстуры.
 	void Button::initialize(sf::RenderWindow* MainWindow) {
 
 		//---> Передача аргументов.
@@ -51,7 +50,7 @@ namespace DUBGUI {
 		this->MainWindow = MainWindow;
 
 		// Настройка спрайтов.
-		for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
+		for (unsigned int i = 0; i < SpriteLinesCount; i++) {
 			ButtonSprites[i].setPosition(Position);
 			ButtonSprites[i].setScale(Scale);
 		}
@@ -86,7 +85,7 @@ namespace DUBGUI {
 			sf::Sprite ButtonSpriteBufer;
 
 			// Настройка спрайтов.
-			for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
+			for (unsigned int i = 0; i < SpriteLinesCount; i++) {
 				ButtonSprites.push_back(ButtonSpriteBufer);
 				ButtonSprites[i].setPosition(Position);
 				ButtonSprites[i].setTexture(ButtonTexture);
@@ -112,7 +111,7 @@ namespace DUBGUI {
 			sf::Sprite ButtonSpriteBufer;
 
 			// Настройка спрайтов.
-			for (unsigned int i = 0; i < SpriteLinesCount * 2; i++) {
+			for (unsigned int i = 0; i < SpriteLinesCount; i++) {
 				ButtonSprites.push_back(ButtonSpriteBufer);
 				ButtonSprites[i].setPosition(Position);
 				ButtonSprites[i].setTexture(ButtonTexture);
@@ -125,7 +124,7 @@ namespace DUBGUI {
 		else return false;
 	}
 
-	// Отрисовывание и обновление кнопки. Возвращает статус кнопки.
+	// Отрисовывание и обновление кнопки.
 	Button::Status Button::update() {
 
 		// Если курсор попадает на кнопку.
@@ -156,7 +155,7 @@ namespace DUBGUI {
 			if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !ButtonWasPressedOnAway) ButtonWasPressedOnAway = true;
 		}
 
-		MainWindow->draw(ButtonSprites[GetSpriteIndexs()]);
+		MainWindow->draw(ButtonSprites[GetSpriteIndex()]);
 
 		return ButtonStatus;
 	}
