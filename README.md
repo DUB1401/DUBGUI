@@ -8,6 +8,7 @@
 
 * [Button](https://github.com/DUB1401/DUBGUI/blob/main/Documentation/Button.md)
 * [CheckBox](https://github.com/DUB1401/DUBGUI/blob/main/Documentation/CheckBox.md)
+* [TextBox](https://github.com/DUB1401/DUBGUI/blob/main/Documentation/TextBox.md)
 * [ToggleButton](https://github.com/DUB1401/DUBGUI/blob/main/Documentation/ToggleButton.md)
 
-*Evolv Group. Copyright © 2018-2022.*
+*Evolv Group. Copyright © 2018-2023.*

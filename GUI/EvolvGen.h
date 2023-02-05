@@ -2,6 +2,8 @@
 
 #pragma warning(disable : 4244)
 #pragma warning(disable : 4305)
+#pragma warning(disable : 4267)
+#pragma warning(disable : 4018)
 
 #define Cout std::cout
 #define Wout std::wcout
@@ -19,8 +21,6 @@
 #include <vector>
 #include <list>
 #include <map>
-
-
 
 //Перечисления и типы данных.
 namespace DUBLIB {
@@ -44,9 +44,6 @@ namespace DUBLIB {
 
 	//Преобразовывает std::wstring в std::string.
 	std::string ToString(std::wstring Str, Encodings FromEncoding);
-
-	//Инвертирование значения переменной типа bool.
-	bool InvertBool(bool Value);
 
 
 }

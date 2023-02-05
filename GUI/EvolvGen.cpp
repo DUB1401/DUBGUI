@@ -36,12 +36,6 @@ namespace DUBLIB {
 		}
 		return Result;
 	}
-
-	//Инвертирование значения переменной типа bool.
-	bool InvertBool(bool Value) {
-		if (Value) return false;
-		return true;
-	}
 }
 
 //Работа со строками.
@@ -293,7 +287,7 @@ namespace DUBLIB {
 			Lines.push_back(Bufer);
 			Bufer = "";
 		}
-		if (Bufer != "") Lines.push_back(Bufer);
+		Lines.push_back(Bufer);
 		return Lines;
 	}
 
@@ -305,7 +299,8 @@ namespace DUBLIB {
 			Lines.push_back(Bufer);
 			Bufer = L"";
 		}
-		if (Bufer != L"") Lines.push_back(Bufer);
+		Lines.push_back(Bufer);
+
 		return Lines;
 	}
 
